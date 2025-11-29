@@ -1,0 +1,11 @@
+{
+  "name": "kanban-ai",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}
