@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Kanban AI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1rem;
+            height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        aside {
+            border-right: 1px solid #e0e0e0;
+            padding-right: 1rem;
+        }
+        #board-view {
+            overflow: auto;
+        }
+        .board-columns {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 260px;
+            gap: 1rem;
+            align-items: start;
+        }
+        .column {
+            background: #f4f6fb;
+            border: 1px solid #dce1f1;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .task-card {
+            background: white;
+            border: 1px solid #d0d7e2;
+            border-radius: 6px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: grab;
+        }
+        .task-card.dragging {
+            opacity: 0.6;
+        }
+        .message {
+            border-top: 1px dashed #d0d7e2;
+            padding-top: 0.3rem;
+            margin-top: 0.3rem;
+        }
+        nav ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        nav li {
+            margin-bottom: 0.3rem;
+        }
+        .layout {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 100%;
+            gap: 1rem;
+        }
+        .admin-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+        textarea { min-height: 80px; }
+    </style>
+</head>
+<body>
+<aside class="layout">
+    <header>
+        <h2>Доски</h2>
+        <div id="board-list"></div>
+        <button id="refresh">Обновить</button>
+    </header>
+    <section>
+        <h3>Админка</h3>
+        <div class="admin-panels">
+            <article>
+                <h4>Создать доску</h4>
+                <label>Название <input id="board-name" type="text" placeholder="Разработка"></label>
+                <label>Целевая ветка <input id="board-target" type="text" placeholder="main"></label>
+                <button id="create-board">Создать</button>
+            </article>
+            <article>
+                <h4>Создать колонку</h4>
+                <label>Доска <select id="column-board"></select></label>
+                <label>Название <input id="column-name" type="text" placeholder="Анализ"></label>
+                <label>Порядок <input id="column-order" type="number" min="0" value="1"></label>
+                <label>Агент <select id="column-agent"></select></label>
+                <button id="create-column">Создать</button>
+            </article>
+            <article>
+                <h4>Создать задачу</h4>
+                <label>Доска <select id="task-board"></select></label>
+                <label>Колонка <select id="task-column"></select></label>
+                <label>Заголовок <input id="task-title" type="text" placeholder="Новая задача"></label>
+                <label>Описание <textarea id="task-description"></textarea></label>
+                <button id="create-task">Создать</button>
+            </article>
+            <article>
+                <h4>Агенты</h4>
+                <label>Имя <input id="agent-name" type="text" placeholder="Аналитик"></label>
+                <label>Инструкции <textarea id="agent-role"></textarea></label>
+                <label>Критерии приемки <textarea id="agent-acceptance"></textarea></label>
+                <button id="create-agent">Создать</button>
+                <div id="agent-list"></div>
+            </article>
+            <article>
+                <h4>Настройки</h4>
+                <label>OpenAI API key <input id="settings-key" type="text" placeholder="sk-..." /></label>
+                <label>Git репозиторий <input id="settings-repo" type="text" placeholder="git@github.com/org/repo.git" /></label>
+                <label>Целевая ветка <input id="settings-target" type="text" placeholder="main" /></label>
+                <button id="save-settings">Сохранить</button>
+            </article>
+        </div>
+    </section>
+    <footer>
+        <small>Kanban AI – демо-интерфейс с Ktor + Typescript</small>
+    </footer>
+</aside>
+<main id="board-view">
+    <h2 id="board-title">Выберите доску</h2>
+    <div id="kanban" class="board-columns"></div>
+    <div>
+        <h4>Git события</h4>
+        <div id="git-events"></div>
+    </div>
+</main>
+<script type="module" src="/static/js/app.js"></script>
+</body>
+</html>
