@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban AI</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>Kanban AI таск-трекер</h1>
+        <p>Канбан с агентами Codex и интеграцией с ветками Git</p>
+    </header>
+    <main class="grid">
+        <section>
+            <h2>Агенты</h2>
+            <form id="agent-form">
+                <input name="name" placeholder="Имя" required />
+                <input name="roleInstructions" placeholder="Инструкции по роли" required />
+                <input name="acceptanceCriteria" placeholder="Критерии приемки" required />
+                <button type="submit">Создать агента</button>
+            </form>
+            <ul id="agents"></ul>
+        </section>
+        <section>
+            <h2>Глобальные инструкции</h2>
+            <form id="instruction-form">
+                <input name="content" placeholder="Инструкция" required />
+                <button type="submit">Добавить</button>
+            </form>
+            <ul id="instructions"></ul>
+        </section>
+        <section>
+            <h2>Доска</h2>
+            <form id="board-form">
+                <input name="name" placeholder="Название доски" required />
+                <input name="targetBranch" placeholder="Целевая ветка" value="main" />
+                <input name="repoPath" placeholder="Путь к Git" value="." />
+                <button type="submit">Создать доску</button>
+            </form>
+            <div id="boards"></div>
+        </section>
+        <section>
+            <h2>Колонки</h2>
+            <form id="column-form">
+                <input name="boardId" placeholder="ID доски" required />
+                <input name="name" placeholder="Название колонки" required />
+                <input name="agentId" placeholder="ID агента (опционально)" />
+                <button type="submit">Добавить колонку</button>
+            </form>
+        </section>
+        <section>
+            <h2>Задачи</h2>
+            <form id="task-form">
+                <input name="boardId" placeholder="ID доски" required />
+                <input name="title" placeholder="Заголовок" required />
+                <input name="description" placeholder="Описание" />
+                <button type="submit">Создать</button>
+            </form>
+            <div id="tasks"></div>
+        </section>
+    </main>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
