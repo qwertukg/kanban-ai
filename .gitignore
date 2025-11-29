@@ -4,6 +4,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+node_modules/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -33,4 +35,4 @@ out/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
+.vscode
